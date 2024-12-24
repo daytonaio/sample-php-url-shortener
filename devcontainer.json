@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 2,
+  "name": "PHP & MySQL",
+  "image": "mcr.microsoft.com/devcontainers/php:8.2",
+  "features": {
+      "ghcr.io/devcontainers/features/mysql:1": {}
+  },
+  "forwardPorts": [80, 3306, 3307],
+  "customizations": {
+      "vscode": {
+          "extensions": [
+              "xdebug.php-debug",
+              "bmewburn.vscode-intelephense-client"
+          ]
+      }
+  }
+}

@@ -1,0 +1,14 @@
+FROM mcr.microsoft.com/devcontainers/php:8.2
+
+RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+    && apt-get -y install --no-install-recommends \
+        apache2 \
+        libapache2-mod-php \
+        php-mysql \
+    && apt-get clean -y \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN a2enmod php
+RUN a2enmod rewrite
+
+COPY apache-config.conf /etc/apache2/sites-available/000-default.conf
