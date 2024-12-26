@@ -1,0 +1,13 @@
+{
+    "name": "sourcegraph/url-shortener",
+    "description": "PHP URL Shortener Sample Project",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sourcegraph",
+            "email": "support@sourcegraph.com"
+        }
+    ],
+    "require": {}
+}

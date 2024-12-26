@@ -1,11 +1,11 @@
 <?php
 // Database Connection
-$host = "localhost";
-$username = "root";
-$password = ""; // Default for XAMPP
-$database = "url_shortener";
+$host = "db";  // Docker service name
+$username = "urlshortener";  // From docker-compose.yml
+$password = "urlshortener";  // From docker-compose.yml
+$database = "urlshortener";  // From docker-compose.yml
 
-$conn = new mysqli($host, $username, $password, $database, 3307);
+$conn = new mysqli($host, $username, $password, $database, 3306);  // Standard MySQL port
 
 // Check for connection errors
 if ($conn->connect_error) {
@@ -33,23 +33,23 @@ $stmt->bind_param("ss", $long_url, $short_code);
 
 // Execute the query and check for errors
 if ($stmt->execute()) {
-  $shortened_url = "http://localhost/url-shortener/redirect.php?code=" . $short_code;
-  echo '<div class="alert alert-success">
-          Shortened URL: <a href="' . htmlspecialchars($shortened_url) . '" target="_blank" class="alert-link">' .
-          htmlspecialchars($shortened_url) . '</a>
-        </div>';
-  echo '<button onclick="copyToClipboard()" class="btn btn-secondary w-100" id="copyButton">
-          Copy Shortened URL
-        </button>';
-  echo '<script>
-          function copyToClipboard() {
-              const shortUrl = document.querySelector(".alert-link");
-              navigator.clipboard.writeText(shortUrl.href);
-              alert("URL copied to clipboard!");
-          }
-        </script>';
+    $shortened_url = "http://localhost:8080/redirect.php?code=" . $short_code;  // Updated port to 8080
+    echo '<div class="alert alert-success">
+            Shortened URL: <a href="' . htmlspecialchars($shortened_url) . '" target="_blank" class="alert-link">' .
+            htmlspecialchars($shortened_url) . '</a>
+          </div>';
+    echo '<button onclick="copyToClipboard()" class="btn btn-secondary w-100" id="copyButton">
+            Copy Shortened URL
+          </button>';
+    echo '<script>
+            function copyToClipboard() {
+                const shortUrl = document.querySelector(".alert-link");
+                navigator.clipboard.writeText(shortUrl.href);
+                alert("URL copied to clipboard!");
+            }
+          </script>';
 } else {
-  echo '<div class="alert alert-danger">Error: ' . htmlspecialchars($stmt->error) . '</div>';
+    echo '<div class="alert alert-danger">Error: ' . htmlspecialchars($stmt->error) . '</div>';
 }
 
 // Close the statement and connection

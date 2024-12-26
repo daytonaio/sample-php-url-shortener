@@ -1,11 +1,11 @@
 <?php
 // Database Connection
-$host = "localhost";
-$username = "root";
-$password = "";
-$database = "url_shortener";
+$host = "db";  // Using Docker service name
+$username = "urlshortener";
+$password = "urlshortener";
+$database = "urlshortener";
 
-$conn = new mysqli($host, $username, $password, $database, 3307);
+$conn = new mysqli($host, $username, $password, $database, 3306);
 
 // Check connection
 if ($conn->connect_error) {

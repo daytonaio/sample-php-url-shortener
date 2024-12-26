@@ -1,24 +1,28 @@
 services:
-  app:
-    image: mcr.microsoft.com/devcontainers/php:8.2
+  web:
+    build: .
     ports:
-      - "80:80"
-      - "3307:3306"
+      - "8080:80"
     volumes:
-      - .:/workspace
+      - ./:/var/www/html
+    depends_on:
+      - db
     environment:
-      - MYSQL_HOST=localhost
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=
-      - MYSQL_DATABASE=url_shortener
+      - DB_HOST=db
+      - DB_USER=urlshortener
+      - DB_PASSWORD=urlshortener
+      - DB_NAME=urlshortener
 
   db:
     image: mysql:8.0
     environment:
-      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
-      - MYSQL_DATABASE=url_shortener
+      - MYSQL_DATABASE=urlshortener
+      - MYSQL_USER=urlshortener
+      - MYSQL_PASSWORD=urlshortener
+      - MYSQL_ROOT_PASSWORD=rootpassword
     volumes:
-      - mysql-data:/var/lib/mysql
+      - db_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
 volumes:
-  mysql-data:
+  db_data:
